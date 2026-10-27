@@ -16,6 +16,7 @@ import { RemediationGuide } from './components/RemediationGuide';
 import { BenchmarkTargetsView } from './components/BenchmarkTargetsView';
 import { MethodologyView } from './components/MethodologyView';
 import { SecurityAnalysisReport } from './types/security';
+import { runClientFallbackAnalysis } from './services/clientAnalyzer';
 import { 
   ShieldCheck, 
   Lock, 
@@ -60,21 +61,32 @@ export default function App() {
       setScanStep(steps[stepIndex]);
     }, 700);
 
+    let reportData: SecurityAnalysisReport | null = null;
+
     try {
-      const res = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: urlToAnalyze }),
-      });
+      try {
+        const res = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: urlToAnalyze }),
+        });
 
-      clearInterval(interval);
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || `HTTP ${res.status}: Failed to analyze target domain`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json && !json.error && json.scores) {
+            reportData = json;
+          }
+        }
+      } catch (networkErr) {
+        console.warn('Backend API unreachable, triggering live client-side DoH security audit:', networkErr);
       }
 
-      const reportData: SecurityAnalysisReport = await res.json();
+      // If backend was unreachable or returned an error, invoke resilient live client-side DoH analyzer
+      if (!reportData) {
+        reportData = await runClientFallbackAnalysis(urlToAnalyze);
+      }
+
+      clearInterval(interval);
       setReport(reportData);
       setActiveView('scanner');
       setActiveTab('overview');
