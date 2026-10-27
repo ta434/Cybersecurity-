@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Enforce Times New Roman everywhere across all elements */
+*, *::before, *::after {
+  font-family: 'Times New Roman', Times, Georgia, serif !important;
+}
+
+@layer base {
+  html, body {
+    font-family: 'Times New Roman', Times, Georgia, serif !important;
+    color: #f8fafc;
+    background-color: #020617;
+  }
+
+  input, button, select, textarea, kbd, samp, pre, code, span, p, h1, h2, h3, h4, h5, h6, div, table, th, td {
+    font-family: 'Times New Roman', Times, Georgia, serif !important;
+  }
+}
+
+/* Dark theme scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+    font-family: 'Times New Roman', Times, Georgia, serif !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-card {
+    border: 1px solid #cbd5e1 !important;
+    break-inside: avoid;
+    box-shadow: none !important;
+    background-color: white !important;
+    color: black !important;
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "desk-racer",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "predev": "[ -d node_modules/.bin ] || bun install || npm install",
+    "dev": "tsx server.ts",
+    "prebuild": "[ -d node_modules/.bin ] || bun install || npm install",
+    "build": "vite build",
+    "prelint": "[ -d node_modules/.bin ] || bun install || npm install",
+    "lint": "tsc --noEmit",
+    "start": "NODE_ENV=production tsx server.ts",
+    "preview": "vite preview --port=3000 --host=0.0.0.0"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.19.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/express": "^5.0.6",
+    "express": "^5.3.0",
+    "lucide-react": "^1.61.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.183.2",
+    "tsx": "^4.23.15",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.183.0",
+    "typescript": "~5.8.2"
+  }
+}

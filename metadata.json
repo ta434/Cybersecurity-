@@ -1,0 +1,6 @@
+{
+  "name": "CyberScan - URL & Domain Security Analyzer",
+  "description": "Comprehensive cybersecurity URL analyzer assessing DNS records, SSL/TLS certificates, security headers, cookie safety, email authentication, redirects, and threat indicators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
